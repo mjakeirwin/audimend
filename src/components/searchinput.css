@@ -1,0 +1,18 @@
+.MuiInputLabel-root {
+  color: white !important;
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: white !important;
+}
+
+.MuiOutlinedInput-input {
+  color: white !important;
+}
+
+.searchIcon {
+  position: absolute;
+  left: calc(100% - 60px);
+  bottom: 25%;
+}
+

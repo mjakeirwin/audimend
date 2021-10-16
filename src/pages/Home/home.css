@@ -1,0 +1,28 @@
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.search {
+    position: absolute;
+    width:100%;
+    left: 35%;
+    top: 30%;
+
+}
+
+
+.logo {
+    position: relative;
+    max-width:25%; 
+    height:auto;
+    width:auto
+}
+
+@media (max-width: 600px) {
+    .logo {
+        max-width:50%;
+        right: 55px
+    }
+  }

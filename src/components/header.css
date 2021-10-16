@@ -1,0 +1,13 @@
+.header {
+    background-color: black !important;
+    padding-top: 0.25rem;
+    padding-bottom: 0.1rem;
+}
+
+.searchContainer{
+    min-width: 30%;
+    position:absolute;
+    left:200px;
+    bottom: auto
+
+}
