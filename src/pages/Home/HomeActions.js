@@ -6,7 +6,7 @@ export const TOGGLESEARCH = "TOGGLESEARCH";
 
 export const getBooks = () => {
   const callBackendAPI = async () => {
-    const response = await fetch("/similarity");
+    const response = await fetch("Audimend-env.eba-kanxbpya.us-east-1.elasticbeanstalk.com/similarity");
     const body = await response.json();
 
     if (response.status !== 200) {
@@ -28,7 +28,7 @@ export const getBooks = () => {
 
 export const getAudiobooks = () => {
   const callBackendAPI = async () => {
-    const response = await fetch("/audiobooks");
+    const response = await fetch("Audimend-env.eba-kanxbpya.us-east-1.elasticbeanstalk.com/audiobooks");
     const body = await response.json();
 
     if (response.status !== 200) {

@@ -37,7 +37,7 @@ app.use(express.static("public"));
 
 // create a GET route for Similarity Table
 app.get("/similarity", function (req, res) {
-  pool.query("SELECT * FROM similarity;", function (err, result) {
+  pool.query("SELECT * FROM similarity LIMIT 1000;", function (err, result) {
     if (result) {
       res.send(result.rows);
     } else {
@@ -49,7 +49,7 @@ app.get("/similarity", function (req, res) {
 // create a GET route for Similarity Table
 app.get("/audiobooks", function (req, res) {
   pool.query(
-    "SELECT uuid, image_google, title, author, rating_google, text_snippet, categories_google, description_google FROM audiobooks",
+    "SELECT uuid, image_google, title, author, rating_google, text_snippet, categories_google, description_google FROM audiobooks LIMIT 1000",
     function (err, result) {
       if (result) {
         res.send(result.rows);
