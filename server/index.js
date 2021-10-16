@@ -4,6 +4,8 @@ const dotenv = require("dotenv");
 const port = process.env.PORT || 5000;
 const pg = require("pg");
 const Pool = require("pg").Pool;
+var cors = require('cors');
+
 
 const result = dotenv.config();
 
@@ -31,9 +33,15 @@ const pool = new Pool({
 
 const app = express(); // create express app
 
+// Avoid cors issues
+app.use(cors());
+
+
 // add middlewares
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
+
+
 
 // create a GET route for Similarity Table
 app.get("/similarity", function (req, res) {

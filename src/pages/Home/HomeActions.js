@@ -3,10 +3,18 @@ export const AUDIOBOOKDATA = "AUDIOBOOKDATA";
 export const SAVESEARCHRESULT = "SAVESEARCHRESULT";
 export const TOGGLESEARCH = "TOGGLESEARCH";
 
-
 export const getBooks = () => {
   const callBackendAPI = async () => {
-    const response = await fetch("Audimend-env.eba-kanxbpya.us-east-1.elasticbeanstalk.com/similarity");
+    const response = await fetch(
+      "http://audimend-env.eba-kanxbpya.us-east-1.elasticbeanstalk.com/similarity",
+      {
+        method: "GET",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const body = await response.json();
 
     if (response.status !== 200) {
@@ -14,7 +22,6 @@ export const getBooks = () => {
     }
     return body;
   };
-
 
   return (dispatch) => {
     callBackendAPI().then((res) => {
@@ -28,7 +35,9 @@ export const getBooks = () => {
 
 export const getAudiobooks = () => {
   const callBackendAPI = async () => {
-    const response = await fetch("Audimend-env.eba-kanxbpya.us-east-1.elasticbeanstalk.com/audiobooks");
+    const response = await fetch(
+      "http://audimend-env.eba-kanxbpya.us-east-1.elasticbeanstalk.com/similarity"
+    );
     const body = await response.json();
 
     if (response.status !== 200) {
@@ -36,7 +45,6 @@ export const getAudiobooks = () => {
     }
     return body;
   };
-
 
   return (dispatch) => {
     callBackendAPI().then((res) => {
@@ -48,22 +56,16 @@ export const getAudiobooks = () => {
   };
 };
 
-
 export const saveSearchResult = (uuid, index) => {
-  console.log("action","saveSearchResult", uuid, index)
+  console.log("action", "saveSearchResult", uuid, index);
   return {
     type: SAVESEARCHRESULT,
-    data: {uuid, index}
-
+    data: { uuid, index },
   };
 };
 
 export const toggleSearch = () => {
   return {
     type: TOGGLESEARCH,
-
   };
 };
-
-
-
