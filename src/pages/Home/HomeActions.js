@@ -36,7 +36,7 @@ export const getBooks = () => {
 export const getAudiobooks = () => {
   const callBackendAPI = async () => {
     const response = await fetch(
-      "http://audimend-env.eba-kanxbpya.us-east-1.elasticbeanstalk.com/similarity"
+      "http://audimend-env.eba-kanxbpya.us-east-1.elasticbeanstalk.com/audiobooks"
     );
     const body = await response.json();
 
