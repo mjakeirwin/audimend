@@ -6,7 +6,7 @@ export const TOGGLESEARCH = "TOGGLESEARCH";
 export const getBooks = () => {
   const callBackendAPI = async () => {
     const response = await fetch(
-      "http://audimend-api.us-east-1.elasticbeanstalk.com/similarity",
+      "https://api.audimend.dev/similarity",
       {
         method: "GET",
         mode: "cors",
@@ -36,7 +36,7 @@ export const getBooks = () => {
 export const getAudiobooks = () => {
   const callBackendAPI = async () => {
     const response = await fetch(
-      "http://audimend-api.us-east-1.elasticbeanstalk.com/audiobooks"
+      "https://api.audimend.dev/audiobooks"
     );
     const body = await response.json();
 
