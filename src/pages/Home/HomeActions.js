@@ -8,7 +8,7 @@ export const SEARCHBOOKS = "SEARCHBOOKS";
 export const ERRORSEARCHBOOKS = "ERRORSEARCHBOOKS";
 export const CREATEBOOKGRID = "CREATEBOOKGRID";
 
-const IS_PROD = process.env.IS_PROD || false;
+const IS_PROD = process.env.IS_PROD || true;
 
 let ENDPOINT = "";
 
