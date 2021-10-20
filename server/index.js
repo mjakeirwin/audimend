@@ -66,10 +66,7 @@ app.get("/search/:query", function (req, res) {
   });
 });
 
-/* "SELECT uuid, link, image_google, title, author, \
-    rating_google, text_snippet, categories_google, description_google \
-    FROM similarity,audiobooks WHERE similarity.uuid=audiobooks.uuid AND index > 0 AND index < 50",
- */
+
 // create a GET route for Audiobook Table
 app.get("/audiobooks/:index", function (req, res) {
   let { index } = req.params;

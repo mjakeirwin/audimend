@@ -20,6 +20,8 @@ const INITIAL_STATE = {
   openSearch: false,
   bookGrid: null,
   createGrid: false,
+  loadingSearch: true,
+  searchTitle: null
 };
 
 const normalizeAudiobooks = (books) =>
@@ -109,12 +111,15 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         index: action.data[0].index,
         searchResult: action.data[0].uuid,
+        searchTitle: action.data[0].title,
         openSearch: true,
+        loadingSearch: true,
       };
     case CREATEBOOKGRID:
       return {
         ...state,
         createGrid: false,
+        loadingSearch: false,
         bookGrid: createGrid(
           action.data.audiobooks,
           action.data.searchOptions,

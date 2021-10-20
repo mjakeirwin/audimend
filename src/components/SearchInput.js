@@ -12,7 +12,18 @@ const getTitle = (option) => {
 };
 
 export default function SearchInput(props) {
-  let { bookNames, onChange } = props;
+  let { bookNames, onChange, currentSearch } = props;
+
+  const keyPress = (e, onChange) => {
+
+    if (e.uuid && e.index) {
+      onChange(e);
+    }
+  
+    if (e.keyCode === 13) {
+      onChange(e, "enter");
+    }
+  };
 
 
   return (
@@ -21,9 +32,12 @@ export default function SearchInput(props) {
         freeSolo
         id="free-solo-2-demo2"
         disableClearable
-        onChange={(event, value) => {
-          onChange(value);
-        }}
+        onChange={(e, value) => {
+              keyPress(value, onChange);
+            }}
+            onKeyDown={(e) => {
+              keyPress(e, onChange);
+            }}
         filterOptions={filterOptions}
         options={bookNames}
         getOptionLabel={getTitle}
@@ -32,6 +46,7 @@ export default function SearchInput(props) {
             {...params}
             sx={{ ml: 1, flex: 1, color: "white" }}
             label="Search"
+            placeholder = {currentSearch}
             InputProps={{
               ...params.InputProps,
               type: "search",

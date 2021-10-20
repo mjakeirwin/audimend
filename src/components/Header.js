@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import Collapse from "@mui/material/Collapse";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { saveSearchResult } from "../pages/Home/HomeActions";
+import { searchBooks } from "../pages/Home/HomeActions";
 
 
 import style from "./header.css";
@@ -28,20 +28,32 @@ class Header extends Component {
 
   componentDidMount(props) {}
 
-  handleSearch = (e) => {
-    let { history, saveSearchResult } = this.props;
+  handleSearch = (e, type) => {
+    let { history, searchBooks } = this.props;
 
-    console.log("headerSearch", e.index)
+    var path = "/search/:bookId/".replace(":bookId", type);
 
-    saveSearchResult(e.uuid, e.index);
 
-    let path = "/search/:bookId/".replace(":bookId", e.uuid);
+    if (e.uuid && e.index) {
+      searchBooks(e.title);
+
+      path = "/search/:bookId/".replace(":bookId", e.title);
+    } 
+
+    if (type === 'enter'){
+      searchBooks(e.target.value);
+
+      path = "/search/:bookId/".replace(":bookId", e.target.value);
+
+    }
+
     history.push(path);
   };
 
   render() {
-    let { bookNames, openSearch } = this.props;
+    let { bookNames, openSearch, searchTitle } = this.props;
 
+    console.log(searchTitle)
 
     return (
       <div>
@@ -73,8 +85,7 @@ class Header extends Component {
             <Fade in={true} timeout={2000}>
               <div className="searchContainer">
                 {openSearch ? (
-                  <SearchInput bookNames={bookNames} onChange={this.handleSearch}
- />
+                  <SearchInput bookNames={bookNames} onChange={this.handleSearch} currentSearch = {searchTitle}/>
                 ) : (
                   <SearchIcon sx={{ float: "right" }} />
                 )}
@@ -93,12 +104,13 @@ const mapStateToProps = (state, ownProps) => {
     openSearch: state["home"]["openSearch"],
     bookNames: state["home"]["searchOptions"],
     location: ownProps.location.pathname,
+    searchTitle: state["home"]["searchTitle"]
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    saveSearchResult: (uuid, index) => dispatch(saveSearchResult(uuid, index)),
+    searchBooks: (searchText) => dispatch(searchBooks(searchText)),
 
   };
 };
