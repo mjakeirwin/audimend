@@ -18,7 +18,7 @@ const BookCard = (props) => {
   return (
     <Grow in={true} timeout={2000}>
       <Card
-        sx={{ minWidth: 50, maxHeight: 200, border: "1px solid black" }}
+        sx={{ minWidth: 50, minHeight: 200, maxHeight: 200, border: "1px solid black" }}
         raised={true}
       >
         <Paper
@@ -46,7 +46,7 @@ const BookCard = (props) => {
           ) : (
             <img
               src={missingImage}
-              alt={book.title}
+              alt={book && book.title}
               width="100%"
               height="100%"
             />
@@ -55,10 +55,10 @@ const BookCard = (props) => {
 
         <CardContent sx={{}}>
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            {book.author}
+            {book && book.author}
           </Typography>
           <Typography variant="h5" component="div" noWrap>
-            {book.title}
+            {book && book.title}
 
             <Divider
               sx={{ height: "1px", background: "black", width: "10%" }}
@@ -67,11 +67,11 @@ const BookCard = (props) => {
           </Typography>
 
           <Typography sx={{ mb: 1.5, maxHeight: "25%" }} color="text.secondary">
-            {book.rating_google ? book.rating_google : "-"}
+            {book && book.rating_google ? book.rating_google : "-"}
           </Typography>
 
           <Box sx={{ width: "70%", height: "30px", paddingBottom: "1rem" }}>
-            <Typography className="description">{book.text_snippet}</Typography>
+            <Typography className="description">{book && book.text_snippet}</Typography>
           </Box>
         </CardContent>
         <CardActions sx={{ paddingTop: "0px", float: "bottom" }}>

@@ -31,14 +31,16 @@ class Header extends Component {
   handleSearch = (e) => {
     let { history, saveSearchResult } = this.props;
 
-    saveSearchResult(e.uuid);
+    console.log("headerSearch", e.index)
+
+    saveSearchResult(e.uuid, e.index);
 
     let path = "/search/:bookId/".replace(":bookId", e.uuid);
     history.push(path);
   };
 
   render() {
-    let { bookNames, location, openSearch } = this.props;
+    let { bookNames, openSearch } = this.props;
 
 
     return (
@@ -86,8 +88,6 @@ class Header extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log("state");
-  console.log(ownProps);
 
   return {
     openSearch: state["home"]["openSearch"],
@@ -98,7 +98,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    saveSearchResult: (uuid) => dispatch(saveSearchResult(uuid)),
+    saveSearchResult: (uuid, index) => dispatch(saveSearchResult(uuid, index)),
 
   };
 };

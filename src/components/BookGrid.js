@@ -5,12 +5,11 @@ import BookCard from "./BookCard";
 
 const BookGrid = (props) => {
   let { bookGrid, openBook } = props;
-  console.log(bookGrid);
 
   return (
     <Grid container spacing={2} sx={{}}>
-      {bookGrid.map((book) => (
-        <Grid item xs={8} md={4} lg={4}>
+      {bookGrid.map((book, key) => (
+        <Grid key={key} item xs={8} md={4} lg={4}>
           <BookCard book={book} openBook={openBook} />
         </Grid>
       ))}

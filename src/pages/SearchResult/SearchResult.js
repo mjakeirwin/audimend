@@ -2,20 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import BookGrid from "../../components/BookGrid";
 import Divider from "@mui/material/Divider";
-import style from "./searchresult.css";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import BookCard from "../../components/BookCard";
 import BookDrawer from "../../components/BookDrawer";
 import Drawer from "@mui/material/Drawer";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import List from "@mui/material/List";
 import Container from "@mui/material/Container";
-import { height } from "@mui/system";
+import { getAudiobooks, createBookGrid } from "../Home/HomeActions";
 
 class SearchResult extends Component {
   constructor(props) {
@@ -23,59 +14,28 @@ class SearchResult extends Component {
     this.state = {
       openBook: false,
       clickedBook: null,
-      bookGrid: [],
     };
   }
 
-  componentDidMount(props) {
-    let { index, searchOptions, audioBooks } = this.props;
-    let bookGrid = [];
-    let indexArray = [];
-    let low = Number(index) - 4;
-    let high = Number(index) + 5;
-    index = Number(index)
-    let abslow = Math.abs(low);
+  componentDidMount(props) {}
 
-    if (low < 0) {
-      low = 0;
-      high = high + abslow;
+  componentDidUpdate(prevProps) {
+    let {
+      index,
+      getAudiobooks,
+      createGrid,
+      createBookGrid,
+      audiobooks,
+      searchOptions,
+    } = this.props;
+
+    if (prevProps.index !== index) {
+      getAudiobooks(index);
     }
 
-    for (var i = low; i <= high; i++) {
-      console.log(i, index)
-      if (i !== Number(index)) {
-        indexArray.push(i);
-      }
+    if (createGrid && audiobooks && searchOptions) {
+      createBookGrid(audiobooks, searchOptions, index);
     }
-
-    indexArray.forEach((element) =>
-      bookGrid.push(audioBooks[searchOptions[element].uuid])
-    );
-
-    console.log(indexArray, bookGrid);
-
-    this.openBook(false);
-
-    this.setState({ bookGrid: bookGrid });
-  }
-
-  componentDidUpdate(props) {
-    let { index, searchOptions } = this.props;
-    let bookGrid = [];
-    let low = Number(index) - 4;
-    let high = Number(index) + 5;
-    let abslow = Math.abs(low);
-
-    if (low < 0) {
-      low = 0;
-      high = high + abslow;
-    }
-
-    for (var i = low; i <= high; i++) {
-      bookGrid.push(i);
-    }
-
-    console.log(bookGrid);
   }
 
   openBook = (boolean, book = {}) => {
@@ -83,10 +43,8 @@ class SearchResult extends Component {
   };
 
   render() {
-    let { audioBooks, searchResult } = this.props;
-    let { openBook, clickedBook, bookGrid } = this.state;
-
-    console.log("BOOKGRID", bookGrid);
+    let { audiobooks, searchResult, bookGrid } = this.props;
+    let { openBook, clickedBook } = this.state;
 
     return (
       <React.Fragment>
@@ -106,7 +64,12 @@ class SearchResult extends Component {
             maxWidth: "100% !important",
           }}
         >
-          <BookCard book={searchResult} openBook={this.openBook} />
+          {audiobooks && (
+            <BookCard
+              book={audiobooks[searchResult]}
+              openBook={this.openBook}
+            />
+          )}
         </Container>
 
         <Divider
@@ -120,7 +83,7 @@ class SearchResult extends Component {
             maxWidth: "100% !important",
           }}
         >
-          {audioBooks && (
+          {audiobooks && bookGrid && (
             <BookGrid bookGrid={bookGrid} openBook={this.openBook} />
           )}
         </Container>
@@ -130,18 +93,24 @@ class SearchResult extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("state", state);
+  console.log(state);
 
   return {
     searchResult: state["home"]["searchResult"],
-    audioBooks: state["home"]["audiobookData"],
+    audiobooks: state["home"]["audiobookData"],
     index: state["home"]["index"],
     searchOptions: state["home"]["searchOptions"],
+    bookGrid: state["home"]["bookGrid"],
+    createGrid: state["home"]["createGrid"],
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    getAudiobooks: (index) => dispatch(getAudiobooks(index)),
+    createBookGrid: (audiobooks, searchOptions, index) =>
+      dispatch(createBookGrid(audiobooks, searchOptions, index)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResult);

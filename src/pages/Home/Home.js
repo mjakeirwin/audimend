@@ -12,6 +12,7 @@ import {
   getAudiobooks,
   saveSearchResult,
   toggleSearch,
+  searchBooks,
 } from "./HomeActions";
 
 class Home extends Component {
@@ -22,22 +23,31 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    let { getBooks, getAudiobooks, toggleSearch } = this.props;
+    let { getBooks, toggleSearch } = this.props;
 
     getBooks();
-    getAudiobooks();
     toggleSearch();
   }
 
-  handleSearch = (e) => {
-    let { history, saveSearchResult } = this.props;
+  handleSearch = (e, type) => {
+    let { history, saveSearchResult, searchBooks, getAudiobooks } = this.props;
 
-    console.log(e)
+    var path = "/search/:bookId/".replace(":bookId", type);
 
-    saveSearchResult(e.uuid, e.index);
 
-    let path = "/search/:bookId/".replace(":bookId", e.uuid);
-    console.log("HANDLESEARCH", path);
+    if (e.uuid && e.index) {
+      searchBooks(e.title);
+
+      path = "/search/:bookId/".replace(":bookId", e.title);
+    } 
+
+    if (type === 'enter'){
+      searchBooks(e.target.value);
+
+      path = "/search/:bookId/".replace(":bookId", e.target.value);
+
+    }
+
     history.push(path);
   };
 
@@ -97,9 +107,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getBooks: () => dispatch(getBooks()),
-    getAudiobooks: () => dispatch(getAudiobooks()),
+    getAudiobooks: (index) => dispatch(getAudiobooks(index)),
     saveSearchResult: (uuid, index) => dispatch(saveSearchResult(uuid, index)),
     toggleSearch: () => dispatch(toggleSearch()),
+    searchBooks: (searchText) => dispatch(searchBooks(searchText)),
   };
 };
 

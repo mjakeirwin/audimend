@@ -4,8 +4,7 @@ const dotenv = require("dotenv");
 const port = process.env.PORT || 5000;
 const pg = require("pg");
 const Pool = require("pg").Pool;
-var cors = require('cors');
-
+var cors = require("cors");
 
 const result = dotenv.config();
 
@@ -36,16 +35,13 @@ const app = express(); // create express app
 // Avoid cors issues
 app.use(cors());
 
-
 // add middlewares
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
 
-
-
 // create a GET route for Similarity Table
 app.get("/similarity", function (req, res) {
-  pool.query("SELECT * FROM similarity LIMIT 1000;", function (err, result) {
+  pool.query("SELECT * FROM similarity;", function (err, result) {
     if (result) {
       res.send(result.rows);
     } else {
@@ -54,10 +50,34 @@ app.get("/similarity", function (req, res) {
   });
 });
 
-// create a GET route for Similarity Table
-app.get("/audiobooks", function (req, res) {
+// create a GET route for searching
+app.get("/search/:query", function (req, res) {
+  let { query } = req.params;
+  console.log("query", query);
+
+  let sqlQuery = `SELECT * FROM similarity WHERE LOWER(title) LIKE '%${query.toLowerCase()}%'`;
+
+  pool.query(sqlQuery, function (err, result) {
+    if (result) {
+      res.send(result.rows);
+    } else {
+      console.log("similarity endpoint error", err, POSTGRES_HOST);
+    }
+  });
+});
+
+/* "SELECT uuid, link, image_google, title, author, \
+    rating_google, text_snippet, categories_google, description_google \
+    FROM similarity,audiobooks WHERE similarity.uuid=audiobooks.uuid AND index > 0 AND index < 50",
+ */
+// create a GET route for Audiobook Table
+app.get("/audiobooks/:index", function (req, res) {
+  let { index } = req.params;
+
   pool.query(
-    "SELECT uuid, image_google, title, author, rating_google, text_snippet, categories_google, description_google FROM audiobooks LIMIT 1000",
+    `SELECT similarity.uuid, link, image_google, similarity.title, author,rating_google, text_snippet, categories_google, description_google FROM similarity,audiobooks WHERE similarity.uuid=audiobooks.uuid 
+    AND 
+    index > ${Number(index) - 20} AND index < ${Number(index) + 20}`,
     function (err, result) {
       if (result) {
         res.send(result.rows);

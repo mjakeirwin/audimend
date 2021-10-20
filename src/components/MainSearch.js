@@ -13,7 +13,18 @@ const filterOptions = createFilterOptions({
 });
 
 const getTitle = (option) => {
-  return option.title
+  return option.title;
+};
+
+const keyPress = (e, onChange) => {
+
+  if (e.uuid && e.index) {
+    onChange(e);
+  }
+
+  if (e.keyCode === 13) {
+    onChange(e, "enter");
+  }
 };
 
 export default function MainSearch(props) {
@@ -37,18 +48,23 @@ export default function MainSearch(props) {
           }}
         >
           <Divider
-            sx={{ height: 28, m: 0.5, background: "white", marginLeft: '10%' }}
+            sx={{ height: 28, m: 0.5, background: "white", marginLeft: "10%" }}
             orientation="vertical"
           />
           <Autocomplete
             freeSolo
-            sx={{ width: "100%"}}
-            ListboxProps={{ style: { maxHeight: '15rem' } }}
+            sx={{ width: "100%" }}
+            ListboxProps={{ style: { maxHeight: "15rem" } }}
             id="free-solo-2-demo2"
-            onChange={(event,value) => {onChange(value)}}
+            onChange={(e, value) => {
+              keyPress(value, onChange);
+            }}
+            onKeyDown={(e) => {
+              keyPress(e, onChange);
+            }}
             disableClearable
-            limitTags = {5}
-            getOptionLabel = {getTitle}
+            limitTags={5}
+            getOptionLabel={getTitle}
             filterOptions={filterOptions}
             options={bookNames}
             renderInput={(params) => {
