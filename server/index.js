@@ -72,7 +72,7 @@ app.get("/audiobooks/:index", function (req, res) {
   let { index } = req.params;
 
   pool.query(
-    `SELECT similarity.uuid, link, image_google, similarity.title, author,rating_google, text_snippet, categories_google, description_google FROM similarity,audiobooks WHERE similarity.uuid=audiobooks.uuid 
+    `SELECT similarity.uuid, similarity.index, link, image_google, similarity.title, author,rating_google, text_snippet, categories_google, description_google FROM similarity,audiobooks WHERE similarity.uuid=audiobooks.uuid 
     AND 
     index > ${Number(index) - 20} AND index < ${Number(index) + 20}`,
     function (err, result) {

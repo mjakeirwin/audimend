@@ -11,15 +11,39 @@ import Grow from "@mui/material/Grow";
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
 import missingImage from ".././images/missingImage.png";
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles({
+  flexGrow: {
+    flex: "1",
+  },
+  card: {
+    minWidth: 50,
+    minHeight: 200,
+    maxHeight: 200,
+    border: "1px solid black",
+    "&:hover": {
+      backgroundColor: "#e0e0e0",
+    },
+  },
+});
 
 const BookCard = (props) => {
-  let { openBook, book } = props;
+  let { openBook, book, handleClick } = props;
+  const classes = useStyles();
 
   return (
     <Grow in={true} timeout={2000}>
       <Card
-        sx={{ minWidth: 50, minHeight: 200, maxHeight: 200, border: "1px solid black" }}
+        sx={{
+          minWidth: 50,
+          minHeight: 200,
+          maxHeight: 200,
+          border: "1px solid black",
+        }}
+        className={classes.card}
         raised={true}
+        onClick={() => handleClick(book)}
       >
         <Paper
           variant="outlined"
@@ -67,11 +91,15 @@ const BookCard = (props) => {
           </Typography>
 
           <Typography sx={{ mb: 1.5, maxHeight: "25%" }} color="text.secondary">
-            {book && book.rating_google ? book.rating_google : "-"}
+            {book && book.categories_google ? eval(book.categories_google)[0] + "    " : "    "}
+              
+            {book && book.rating_google ? book.rating_google : ""}
           </Typography>
 
           <Box sx={{ width: "70%", height: "30px", paddingBottom: "1rem" }}>
-            <Typography className="description">{book && book.text_snippet}</Typography>
+            <Typography className="description">
+              {book && book.text_snippet}
+            </Typography>
           </Box>
         </CardContent>
         <CardActions sx={{ paddingTop: "0px", float: "bottom" }}>

@@ -6,6 +6,7 @@ import {
   SEARCHBOOKS,
   ERRORSEARCHBOOKS,
   CREATEBOOKGRID,
+  CHANGEBOOK,
 } from "./HomeActions";
 
 const INITIAL_STATE = {
@@ -21,7 +22,8 @@ const INITIAL_STATE = {
   bookGrid: null,
   createGrid: false,
   loadingSearch: true,
-  searchTitle: null
+  searchTitle: null,
+  updateAudiobooks: false,
 };
 
 const normalizeAudiobooks = (books) =>
@@ -30,20 +32,10 @@ const normalizeAudiobooks = (books) =>
     return acc;
   }, {});
 
-/* 
-  searchResult: state.audiobookData[action.data.uuid],
-  index: action.data.index,
-  openSearch: true,
-  bookGrid: createGrid(
-    state.audiobookData,
-    state.searchOptions,
-    action.data.index
-  ),
- */
 const createGrid = (audiobooks, searchOptions, index) => {
   let indexArray = [];
   let bookGrid = [];
-  let low = Number(index) - 4;
+  let low = Number(index) - 5;
   let high = Number(index) + 5;
   index = Number(index);
   let abslow = Math.abs(low);
@@ -61,9 +53,13 @@ const createGrid = (audiobooks, searchOptions, index) => {
     }
   }
 
-  indexArray.forEach((element) =>
-    bookGrid.push(audiobooks[searchOptions[element].uuid])
-  );
+  console.log(index, indexArray)
+
+  indexArray.forEach((element) => {
+    if (index - 1 !== element) {
+      bookGrid.push(audiobooks[searchOptions[element].uuid]);
+    }
+  });
 
   console.log("bookgrid", bookGrid);
 
@@ -84,6 +80,8 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         audiobookData: normalizeAudiobooks(action.data),
         createGrid: true,
+        updateAudiobooks: false
+
       };
 
     case SAVESEARCHRESULT:
@@ -114,6 +112,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         searchTitle: action.data[0].title,
         openSearch: true,
         loadingSearch: true,
+        updateAudiobooks: true
       };
     case CREATEBOOKGRID:
       return {
@@ -124,6 +123,18 @@ const reducer = (state = INITIAL_STATE, action) => {
           action.data.audiobooks,
           action.data.searchOptions,
           action.data.index
+        ),
+      };
+    case CHANGEBOOK:
+      return {
+        ...state,
+        index: action.data.book.index,
+        searchResult: action.data.book.uuid,
+        searchTitle: action.data.book.title,
+        bookGrid: createGrid(
+          action.data.audiobooks,
+          action.data.searchOptions,
+          action.data.book.index
         ),
       };
 

@@ -10,3 +10,8 @@
 .drawer{
     width: 400px !important;
 }
+
+.consoleContainer {
+    display: flex;
+    background-color: white;
+}

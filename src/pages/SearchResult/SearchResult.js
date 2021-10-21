@@ -6,9 +6,10 @@ import BookCard from "../../components/BookCard";
 import BookDrawer from "../../components/BookDrawer";
 import Drawer from "@mui/material/Drawer";
 import Container from "@mui/material/Container";
-import { getAudiobooks, createBookGrid } from "../Home/HomeActions";
+import { getAudiobooks, createBookGrid, changeBook } from "../Home/HomeActions";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
+import Card from "@mui/material/Card";
 
 class SearchResult extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class SearchResult extends Component {
     this.state = {
       openBook: false,
       clickedBook: null,
+      updateAudiobooks: true,
     };
   }
 
@@ -29,9 +31,10 @@ class SearchResult extends Component {
       createBookGrid,
       audiobooks,
       searchOptions,
+      updateAudiobooks,
     } = this.props;
 
-    if (prevProps.index !== index) {
+    if (updateAudiobooks) {
       getAudiobooks(index);
     }
 
@@ -42,6 +45,12 @@ class SearchResult extends Component {
 
   openBook = (boolean, book = {}) => {
     this.setState({ openBook: boolean, clickedBook: book });
+  };
+
+  handleClick = (book) => {
+    let { changeBook, audiobooks, searchOptions } = this.props;
+    console.log("clickedBook", book);
+    changeBook(audiobooks, searchOptions, book);
   };
 
   render() {
@@ -72,20 +81,46 @@ class SearchResult extends Component {
             >
               <BookDrawer book={clickedBook} />
             </Drawer>
-            <Container
-              sx={{
-                backgroundColor: "rgba(0, 0, 0, 0.25)",
-                padding: "16px !important",
-                maxWidth: "100% !important",
-              }}
-            >
-              {audiobooks && (
-                <BookCard
-                  book={audiobooks[searchResult]}
-                  openBook={this.openBook}
+            <div>
+              <Container
+                sx={{
+                  backgroundColor: "rgba(0, 0, 0, 0.25)",
+                  padding: "16px !important",
+                  maxWidth: "100% !important",
+                  margin: "0",
+                  display: "inline-block",
+                }}
+              >
+                {audiobooks && (
+                  <BookCard
+                    book={audiobooks[searchResult]}
+                    openBook={this.openBook}
+                    handleClick={this.handleClick}
+                  />
+                )}
+              </Container>
+{/* 
+              <Container
+                sx={{
+                  backgroundColor: "rgba(0, 0, 0, 0.25)",
+                  padding: "16px !important",
+                  maxWidth: "50% !important",
+                  display: "inline-block",
+
+                  float: "right",
+                }}
+              >
+                <Card
+                  sx={{
+                    minWidth: 50,
+                    minHeight: 200,
+                    maxHeight: 200,
+                    border: "1px solid black",
+                  }}
+                  raised={false}
                 />
-              )}
-            </Container>
+              </Container> */}
+            </div>
 
             <Divider
               sx={{ height: 1, m: 0.5, background: "black" }}
@@ -99,7 +134,11 @@ class SearchResult extends Component {
               }}
             >
               {audiobooks && bookGrid && (
-                <BookGrid bookGrid={bookGrid} openBook={this.openBook} />
+                <BookGrid
+                  bookGrid={bookGrid}
+                  openBook={this.openBook}
+                  handleClick={this.handleClick}
+                />
               )}
             </Container>
           </div>
@@ -120,6 +159,7 @@ const mapStateToProps = (state) => {
     bookGrid: state["home"]["bookGrid"],
     createGrid: state["home"]["createGrid"],
     loadingSearch: state["home"]["loadingSearch"],
+    updateAudiobooks: state["home"]["updateAudiobooks"],
   };
 };
 
@@ -128,6 +168,8 @@ const mapDispatchToProps = (dispatch) => {
     getAudiobooks: (index) => dispatch(getAudiobooks(index)),
     createBookGrid: (audiobooks, searchOptions, index) =>
       dispatch(createBookGrid(audiobooks, searchOptions, index)),
+    changeBook: (audiobooks, searchOptions, book) =>
+      dispatch(changeBook(audiobooks, searchOptions, book)),
   };
 };
 

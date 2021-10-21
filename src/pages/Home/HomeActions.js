@@ -7,6 +7,7 @@ export const TOGGLESEARCH = "TOGGLESEARCH";
 export const SEARCHBOOKS = "SEARCHBOOKS";
 export const ERRORSEARCHBOOKS = "ERRORSEARCHBOOKS";
 export const CREATEBOOKGRID = "CREATEBOOKGRID";
+export const CHANGEBOOK = "CHANGEBOOK";
 
 const IS_PROD = process.env.IS_PROD || true;
 
@@ -126,5 +127,12 @@ export const createBookGrid = (audiobooks, searchOptions, index) => {
 export const toggleSearch = () => {
   return {
     type: TOGGLESEARCH,
+  };
+};
+
+export const changeBook = (audiobooks, searchOptions, book) => {
+  return {
+    type: CHANGEBOOK,
+    data: { audiobooks, searchOptions, book },
   };
 };
