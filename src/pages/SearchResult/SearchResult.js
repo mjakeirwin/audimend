@@ -52,11 +52,11 @@ class SearchResult extends Component {
   handleClick = (book, bringBack) => {
     let { changeBook, audiobooks, searchOptions } = this.props;
 
-    this.setState({ fade: true });
+    this.setState({ fade: true, updateBook: book });
 
     setTimeout(() => changeBook(audiobooks, searchOptions, book), 800);
-    setTimeout(() => bringBack(), 1000);
-  };
+     setTimeout(() => bringBack(), 1000);
+   };
 
   render() {
     let { audiobooks, searchResult, bookGrid, loadingSearch } = this.props;

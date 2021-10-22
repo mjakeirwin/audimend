@@ -34,8 +34,8 @@ class BookCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      color: "normal",
       fade: true,
-      slide: false,
     };
   }
 
@@ -46,17 +46,12 @@ class BookCard extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    let { book, updateBook, fadeOut } = this.props;
-    let { fade } = this.state;
-    console.log("UPDATEDBOOK", prevProps.book.uuid, updateBook);
+    let { book } = this.props;
+    console.log("UPDATEDBOOK", prevProps.book.uuid, book.uuid);
 
-  /*   if (updateBook === prevProps.book.uuid) {
-      this.setState({ fade: !this.state.fade });
-    } */
-    /* 
-    if (fadeOut) {
-      this.setState({ fade: !this.state.fade });
-    } */
+    if (prevProps.book.uuid !== book.uuid) {
+      this.setState({ color: "changed" });
+    }
   }
 
   fadeAnimation = (book) => {
@@ -79,7 +74,7 @@ class BookCard extends Component {
 
     return (
       <div>
-        <Grow in={fade} timeout={1000}>
+        <Grow key={book.uuid} in={fade} timeout={1000}>
           <Card
             sx={{
               minWidth: "50",
@@ -89,7 +84,6 @@ class BookCard extends Component {
               "&:hover": {
                 backgroundColor: "#e0e0e0",
               },
-              transition: "width 2s",
             }}
             raised={fade}
             onClick={() => this.fadeAnimation(book)}
