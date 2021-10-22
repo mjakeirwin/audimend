@@ -78,8 +78,8 @@ class BookCard extends Component {
           <Card
             sx={{
               minWidth: "50",
-              minHeight: "200",
-              maxHeight: "200",
+              minHeight: "200px",
+              maxHeight: "200px",
               border: "1px solid black",
               "&:hover": {
                 backgroundColor: "#e0e0e0",
