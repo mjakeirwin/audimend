@@ -138,6 +138,8 @@ class SearchResult extends Component {
                 backgroundColor: "rgba(0, 0, 0, 0.25)",
                 padding: "16px !important",
                 maxWidth: "100% !important",
+                position: 'absolute',
+                width: '100%'
               }}
             >
               {audiobooks && bookGrid && (
