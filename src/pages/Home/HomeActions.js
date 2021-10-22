@@ -1,4 +1,5 @@
 import qs from "query-string";
+import dotenv from "dotenv";
 
 export const BOOKDATA = "BOOKDATA";
 export const AUDIOBOOKDATA = "AUDIOBOOKDATA";
@@ -9,9 +10,13 @@ export const ERRORSEARCHBOOKS = "ERRORSEARCHBOOKS";
 export const CREATEBOOKGRID = "CREATEBOOKGRID";
 export const CHANGEBOOK = "CHANGEBOOK";
 
-const IS_PROD = process.env.IS_PROD || true;
+const result = dotenv.config();
 
-let ENDPOINT = "";
+const IS_PROD = process.env.REACT_APP_IS_PROD;
+
+console.log(IS_PROD);
+
+var ENDPOINT = "";
 
 if (IS_PROD) {
   ENDPOINT = "https://api.audimend.dev";
@@ -19,7 +24,6 @@ if (IS_PROD) {
 
 export const searchBooks = (searchText) => {
   let url = `${ENDPOINT}/search/${searchText}`;
-
 
   const callBackendAPI = async () => {
     const response = await fetch(url, {
@@ -43,7 +47,8 @@ export const searchBooks = (searchText) => {
 
   return (dispatch) => {
     callBackendAPI(searchText)
-      .then((res) => {console.log("bookResponse", res)
+      .then((res) => {
+        console.log("bookResponse", res);
         dispatch({
           type: SEARCHBOOKS,
           data: res,
@@ -89,7 +94,7 @@ export const getBooks = () => {
 export const getAudiobooks = (index) => {
   let url = `${ENDPOINT}/audiobooks/${index}`;
 
-  console.log(index, url )
+  console.log(index, url);
 
   const callBackendAPI = async () => {
     const response = await fetch(url);

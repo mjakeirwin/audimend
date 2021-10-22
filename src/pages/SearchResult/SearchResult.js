@@ -18,6 +18,8 @@ class SearchResult extends Component {
       openBook: false,
       clickedBook: null,
       updateAudiobooks: true,
+      updateBook: null,
+      fade: null,
     };
   }
 
@@ -47,15 +49,18 @@ class SearchResult extends Component {
     this.setState({ openBook: boolean, clickedBook: book });
   };
 
-  handleClick = (book) => {
+  handleClick = (book, bringBack) => {
     let { changeBook, audiobooks, searchOptions } = this.props;
-    console.log("clickedBook", book);
-    changeBook(audiobooks, searchOptions, book);
+
+    this.setState({ fade: true });
+
+    setTimeout(() => changeBook(audiobooks, searchOptions, book), 800);
+    setTimeout(() => bringBack(), 1000);
   };
 
   render() {
     let { audiobooks, searchResult, bookGrid, loadingSearch } = this.props;
-    let { openBook, clickedBook } = this.state;
+    let { openBook, clickedBook, updateBook, fade } = this.state;
 
     return (
       <React.Fragment>
@@ -96,10 +101,12 @@ class SearchResult extends Component {
                     book={audiobooks[searchResult]}
                     openBook={this.openBook}
                     handleClick={this.handleClick}
+                    updateBook={updateBook}
+                    fadeOut={fade}
                   />
                 )}
               </Container>
-{/* 
+              {/* 
               <Container
                 sx={{
                   backgroundColor: "rgba(0, 0, 0, 0.25)",
@@ -138,6 +145,7 @@ class SearchResult extends Component {
                   bookGrid={bookGrid}
                   openBook={this.openBook}
                   handleClick={this.handleClick}
+                  updateBook={updateBook}
                 />
               )}
             </Container>
