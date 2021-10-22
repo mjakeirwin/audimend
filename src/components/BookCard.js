@@ -55,11 +55,15 @@ class BookCard extends Component {
   }
 
   fadeAnimation = (book) => {
-    let { handleClick } = this.props;
+    let { handleClick, currentBook } = this.props;
 
-    this.setState({ fade: !this.state.fade });
-
-    handleClick(book, this.bringBack);
+    if (!currentBook) {
+      this.setState({ fade: !this.state.fade });
+      handleClick(book, this.bringBack);
+    }
+    else if (currentBook){
+      handleClick(true, book)
+    }
   };
 
   bringBack = () => {

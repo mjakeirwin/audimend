@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./bookcard.css";
+import style from "./bookdrawer.css";
 import Drawer from "@mui/material/Drawer";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -44,11 +44,11 @@ const BookDrawer = (props) => {
       <Typography
         variant="h5"
         component="div"
-        noWrap
+       
         sx={{
           fontSize: "20px",
           textAlign: "center",
-          marginTop: "10%",
+          margin: "10% 10% 0 10%",
         }}
       >
         {book.title}
@@ -101,7 +101,7 @@ const BookDrawer = (props) => {
         }}
         orientation="vertical"
       />
-      <Typography sx={{ fontSize: 14, textAlign: "center", margin: "5% 10%" }}>
+      <Typography className = 'drawerDescription' sx={{ fontSize: 14, textAlign: "center", margin: "5% 10%", maxHeight: '300px'}}>
         {book.description_google}
       </Typography>
       <Divider

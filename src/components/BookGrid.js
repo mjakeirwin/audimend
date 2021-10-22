@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import BookCard from "./BookCard";
 
 const BookGrid = (props) => {
-  let { bookGrid, openBook, handleClick, updateBook } = props;
+  let { bookGrid, openBook, handleClick, updateBook, currentBook } = props;
 
   return (
     <Grid container spacing={2} sx={{}}>
@@ -15,6 +15,7 @@ const BookGrid = (props) => {
             openBook={openBook}
             handleClick={handleClick}
             updateBook = {updateBook}
+            currentBook ={currentBook}
           />
         </Grid>
       ))}

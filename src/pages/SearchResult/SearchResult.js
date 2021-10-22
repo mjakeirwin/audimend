@@ -100,9 +100,9 @@ class SearchResult extends Component {
                   <BookCard
                     book={audiobooks[searchResult]}
                     openBook={this.openBook}
-                    handleClick={this.handleClick}
+                    handleClick={this.openBook}
                     updateBook={updateBook}
-                    fadeOut={fade}
+                    currentBook = {true}
                   />
                 )}
               </Container>

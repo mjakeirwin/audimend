@@ -18,7 +18,7 @@ console.log(IS_PROD);
 
 var ENDPOINT = "";
 
-if (IS_PROD) {
+if (IS_PROD === 'true') {
   ENDPOINT = "https://api.audimend.dev";
 }
 

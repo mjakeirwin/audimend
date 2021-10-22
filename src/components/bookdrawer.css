@@ -1,0 +1,9 @@
+.drawerDescription {
+  display: -webkit-box;
+  -webkit-line-clamp:15;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 0.8rem !important;
+}
+
+

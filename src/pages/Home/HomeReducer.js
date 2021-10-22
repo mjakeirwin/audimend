@@ -35,8 +35,8 @@ const normalizeAudiobooks = (books) =>
 const createGrid = (audiobooks, searchOptions, index) => {
   let indexArray = [];
   let bookGrid = [];
-  let low = Number(index) - 5;
-  let high = Number(index) + 5;
+  let low = Number(index) - 6;
+  let high = Number(index) + 7;
   index = Number(index);
   let abslow = Math.abs(low);
 
