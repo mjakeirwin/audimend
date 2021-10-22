@@ -47,7 +47,6 @@ class BookCard extends Component {
 
   componentDidUpdate(prevProps) {
     let { book } = this.props;
-    console.log("UPDATEDBOOK", prevProps.book.uuid, book.uuid);
 
     if (prevProps.book.uuid !== book.uuid) {
       this.setState({ color: "changed" });
@@ -60,9 +59,8 @@ class BookCard extends Component {
     if (!currentBook) {
       this.setState({ fade: !this.state.fade });
       handleClick(book, this.bringBack);
-    }
-    else if (currentBook){
-      handleClick(true, book)
+    } else if (currentBook) {
+      handleClick(true, book);
     }
   };
 
@@ -74,7 +72,6 @@ class BookCard extends Component {
     let { openBook, book } = this.props;
     let { fade } = this.state;
 
-    console.log(fade);
 
     return (
       <div>

@@ -1,6 +1,6 @@
 import qs from "query-string";
 import dotenv from "dotenv";
-
+const result = dotenv.config();
 export const BOOKDATA = "BOOKDATA";
 export const AUDIOBOOKDATA = "AUDIOBOOKDATA";
 export const SAVESEARCHRESULT = "SAVESEARCHRESULT";
@@ -10,7 +10,6 @@ export const ERRORSEARCHBOOKS = "ERRORSEARCHBOOKS";
 export const CREATEBOOKGRID = "CREATEBOOKGRID";
 export const CHANGEBOOK = "CHANGEBOOK";
 
-const result = dotenv.config();
 
 const IS_PROD = process.env.REACT_APP_IS_PROD;
 

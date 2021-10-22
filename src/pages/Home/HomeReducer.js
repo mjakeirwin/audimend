@@ -32,15 +32,13 @@ const normalizeAudiobooks = (books) =>
     return acc;
   }, {});
 
-const createGrid = (audiobooks, searchOptions, index) => {
+const createGrid = (audiobooks, searchOptions, index, prevbookGrid) => {
   let indexArray = [];
   let bookGrid = [];
   let low = Number(index) - 6;
   let high = Number(index) + 7;
   index = Number(index);
   let abslow = Math.abs(low);
-
-  console.log("reducer creating grid", index, audiobooks);
 
   if (low < 0) {
     low = 0;
@@ -53,15 +51,13 @@ const createGrid = (audiobooks, searchOptions, index) => {
     }
   }
 
-  console.log(index, indexArray)
-
   indexArray.forEach((element) => {
     if (index - 1 !== element) {
       bookGrid.push(audiobooks[searchOptions[element].uuid]);
     }
   });
 
-  console.log("bookgrid", bookGrid);
+  console.log("bookgrid", bookGrid, "prevbookgrid", prevbookGrid);
 
   return bookGrid;
 };
@@ -80,8 +76,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         audiobookData: normalizeAudiobooks(action.data),
         createGrid: true,
-        updateAudiobooks: false
-
+        updateAudiobooks: false,
       };
 
     case SAVESEARCHRESULT:
@@ -112,7 +107,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         searchTitle: action.data[0].title,
         openSearch: true,
         loadingSearch: true,
-        updateAudiobooks: true
+        updateAudiobooks: true,
       };
     case CREATEBOOKGRID:
       return {
@@ -134,7 +129,8 @@ const reducer = (state = INITIAL_STATE, action) => {
         bookGrid: createGrid(
           action.data.audiobooks,
           action.data.searchOptions,
-          action.data.book.index
+          action.data.book.index,
+          state.bookGrid
         ),
       };
 

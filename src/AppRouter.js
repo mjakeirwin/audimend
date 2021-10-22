@@ -3,13 +3,18 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import SearchResult from "./pages/SearchResult/SearchResult";
 import Header from "./components/Header";
-
 import style from "./styles.css";
+
+
+
+
 
 class AppRouter extends React.Component {
   state = {
     data: null,
   };
+
+
 
   render() {
     return (
