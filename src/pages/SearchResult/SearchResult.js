@@ -139,7 +139,7 @@ class SearchResult extends Component {
                 padding: "16px !important",
                 maxWidth: "100% !important",
                 position: 'absolute',
-                width: '100%'
+                height: '100%'
               }}
             >
               {audiobooks && bookGrid && (
