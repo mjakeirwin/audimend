@@ -32,13 +32,26 @@ const normalizeAudiobooks = (books) =>
     return acc;
   }, {});
 
+const normalizeBookgrid = (books) =>
+  books.reduce((acc, c) => {
+    acc[c.book.uuid] = c;
+    return acc;
+  }, {});
+
 const createGrid = (audiobooks, searchOptions, index, prevbookGrid) => {
   let indexArray = [];
-  let bookGrid = [];
-  let low = Number(index) - 6;
-  let high = Number(index) + 7;
+  var bookGrid = [];
+  var tempArray = [];
+  var bookDict = {};
+  let low = Number(index) - 5;
+  let high = Number(index) + 5;
   index = Number(index);
   let abslow = Math.abs(low);
+
+  if (prevbookGrid) {
+    var compareGrid = normalizeBookgrid(prevbookGrid);
+    console.log("NORMALIZING", compareGrid);
+  }
 
   if (low < 0) {
     low = 0;
@@ -50,14 +63,70 @@ const createGrid = (audiobooks, searchOptions, index, prevbookGrid) => {
       indexArray.push(i);
     }
   }
-
+  let gridIndex = 0;
+  console.log(indexArray);
   indexArray.forEach((element) => {
     if (index - 1 !== element) {
-      bookGrid.push(audiobooks[searchOptions[element].uuid]);
+      if (compareGrid) {
+        if (
+          compareGrid[searchOptions[element].uuid] &&
+          compareGrid[searchOptions[element].uuid].gridIndex !== gridIndex
+        ) {
+          let prevGridIndex =
+            compareGrid[searchOptions[element].uuid].gridIndex;
+
+          bookDict[prevGridIndex] = {
+            book: compareGrid[searchOptions[element].uuid].book,
+            gridIndex: prevGridIndex,
+          };
+        } else {
+          console.log("ADDING TO TEMP");
+          tempArray.push({
+            book: audiobooks[searchOptions[element].uuid],
+            gridIndex: 1,
+          });
+        }
+      } else {
+        bookGrid.push({
+          book: audiobooks[searchOptions[element].uuid],
+          gridIndex: gridIndex,
+        });
+        gridIndex += 1;
+      }
     }
   });
 
-  console.log("bookgrid", bookGrid, "prevbookgrid", prevbookGrid);
+  if (compareGrid) {
+    console.log("run this code")
+    tempArray.forEach((book) => {
+      for (var h = 0; h <= 8; h++) {
+        if (!(h in bookDict)) {
+          console.log("MISSING");
+          bookDict[h] = book;
+          break
+        }
+      }
+    });
+
+    console.log("DICT", bookDict);
+    for (var s = 0; s <= 8; s++) {
+      bookDict[s]['gridIndex'] = s;
+    }
+
+    for (var j = 0; j <= 8; j++) {
+      bookGrid.push(bookDict[j]);
+    }
+    
+  }
+
+  console.log(
+    "bookgrid",
+    bookGrid,
+    "prevbookgrid",
+    prevbookGrid,
+    "tempArray",
+    tempArray
+  );
 
   return bookGrid;
 };

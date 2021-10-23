@@ -11,7 +11,7 @@ const BookGrid = (props) => {
       {bookGrid.map((book, key) => (
         <Grid key={key} item xs={8} md={4} lg={4}>
           <BookCard
-            book={book}
+            book={book.book}
             openBook={openBook}
             handleClick={handleClick}
             updateBook = {updateBook}
