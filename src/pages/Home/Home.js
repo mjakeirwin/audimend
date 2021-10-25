@@ -34,18 +34,16 @@ class Home extends Component {
 
     var path = "/search/:bookId/".replace(":bookId", type);
 
-
     if (e.uuid && e.index) {
       searchBooks(e.title);
 
       path = "/search/:bookId/".replace(":bookId", e.title);
-    } 
+    }
 
-    if (type === 'enter'){
+    if (type === "enter") {
       searchBooks(e.target.value);
 
       path = "/search/:bookId/".replace(":bookId", e.target.value);
-
     }
 
     history.push(path);
@@ -68,24 +66,23 @@ class Home extends Component {
             />
           </Box>
         ) : (
-          <div>
-            <div className="search">
-              <Slide
-                direction="up"
-                in={true}
-                timeout={2000}
-                mountOnEnter
-                unmountOnExit
-              >
-                <img src={audimend} alt="audimend logo" className="logo" />
-              </Slide>
+          <div className="main">
+            <Slide
+              direction="up"
+              in={true}
+              timeout={2000}
+              mountOnEnter
+              unmountOnExit
+            >
+              <img src={audimend} alt="audimend logo" className="logo" />
+            </Slide>
 
+            <div className="search">
               <MainSearch
                 bookNames={searchOptions}
                 onChange={this.handleSearch}
               />
             </div>
-            <div></div>
           </div>
         )}
       </React.Fragment>

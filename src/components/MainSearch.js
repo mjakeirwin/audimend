@@ -41,7 +41,6 @@ export default function MainSearch(props) {
             p: "2px 4px",
             display: "flex",
             alignItems: "center",
-            width: "25%",
             color: "white",
             background: "black",
             height: "3.5rem",
@@ -53,7 +52,7 @@ export default function MainSearch(props) {
           />
           <Autocomplete
             freeSolo
-            sx={{ width: "100%" }}
+            sx={{ width: "400px" }}
             ListboxProps={{ style: { maxHeight: "15rem" } }}
             id="free-solo-2-demo2"
             onChange={(e, value) => {
