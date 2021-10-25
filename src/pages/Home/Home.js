@@ -66,7 +66,7 @@ class Home extends Component {
             />
           </Box>
         ) : (
-          <div className="main">
+          <div >
             <Slide
               direction="up"
               in={true}
