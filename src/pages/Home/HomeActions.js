@@ -10,14 +10,14 @@ export const ERRORSEARCHBOOKS = "ERRORSEARCHBOOKS";
 export const CREATEBOOKGRID = "CREATEBOOKGRID";
 export const CHANGEBOOK = "CHANGEBOOK";
 
-
 const IS_PROD = process.env.REACT_APP_IS_PROD;
+
 
 console.log(IS_PROD);
 
 var ENDPOINT = "";
 
-if (IS_PROD === 'true') {
+if (IS_PROD === "true") {
   ENDPOINT = "https://api.audimend.dev";
 }
 
@@ -109,7 +109,7 @@ export const getAudiobooks = (index) => {
     callBackendAPI(index).then((res) => {
       dispatch({
         type: AUDIOBOOKDATA,
-        data: res,
+        data: { res: res, index: index },
       });
     });
   };
@@ -140,3 +140,4 @@ export const changeBook = (audiobooks, searchOptions, book) => {
     data: { audiobooks, searchOptions, book },
   };
 };
+

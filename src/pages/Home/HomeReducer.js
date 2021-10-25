@@ -24,7 +24,11 @@ const INITIAL_STATE = {
   loadingSearch: true,
   searchTitle: null,
   updateAudiobooks: false,
+  indexBounds: null,
 };
+
+const RANGE = 30
+
 
 const normalizeAudiobooks = (books) =>
   books.reduce((acc, c) => {
@@ -97,26 +101,25 @@ const createGrid = (audiobooks, searchOptions, index, prevbookGrid) => {
   });
 
   if (compareGrid) {
-    console.log("run this code")
+    console.log("run this code");
     tempArray.forEach((book) => {
       for (var h = 0; h <= 8; h++) {
         if (!(h in bookDict)) {
           console.log("MISSING");
           bookDict[h] = book;
-          break
+          break;
         }
       }
     });
 
     console.log("DICT", bookDict);
     for (var s = 0; s <= 8; s++) {
-      bookDict[s]['gridIndex'] = s;
+      bookDict[s]["gridIndex"] = s;
     }
 
     for (var j = 0; j <= 8; j++) {
       bookGrid.push(bookDict[j]);
     }
-    
   }
 
   console.log(
@@ -143,8 +146,13 @@ const reducer = (state = INITIAL_STATE, action) => {
     case AUDIOBOOKDATA:
       return {
         ...state,
-        audiobookData: normalizeAudiobooks(action.data),
+        audiobookData: normalizeAudiobooks(action.data.res),
         createGrid: true,
+        index: action.data.index,
+        indexBounds: {
+          indexHigh: Number(action.data.index) + RANGE,
+          indexLow: Number(action.data.index) - RANGE,
+        },
         updateAudiobooks: false,
       };
 
@@ -172,6 +180,10 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         index: action.data[0].index,
+        indexBounds: {
+          indexHigh: Number(action.data[0].index) + RANGE,
+          indexLow: Number(action.data[0].index) - RANGE,
+        },
         searchResult: action.data[0].uuid,
         searchTitle: action.data[0].title,
         openSearch: true,
@@ -193,6 +205,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         index: action.data.book.index,
+
         searchResult: action.data.book.uuid,
         searchTitle: action.data.book.title,
         bookGrid: createGrid(

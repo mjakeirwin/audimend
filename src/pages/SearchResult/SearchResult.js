@@ -6,7 +6,11 @@ import BookCard from "../../components/BookCard";
 import BookDrawer from "../../components/BookDrawer";
 import Drawer from "@mui/material/Drawer";
 import Container from "@mui/material/Container";
-import { getAudiobooks, createBookGrid, changeBook } from "../Home/HomeActions";
+import {
+  getAudiobooks,
+  createBookGrid,
+  changeBook,
+} from "../Home/HomeActions";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import Card from "@mui/material/Card";
@@ -20,6 +24,8 @@ class SearchResult extends Component {
       updateAudiobooks: true,
       updateBook: null,
       fade: null,
+      indexHigh: null,
+      indexLow: null,
     };
   }
 
@@ -34,10 +40,19 @@ class SearchResult extends Component {
       audiobooks,
       searchOptions,
       updateAudiobooks,
+      indexBounds
+  
     } = this.props;
+
+    console.log(indexBounds.indexHigh, index, indexBounds.indexLow);
 
     if (updateAudiobooks) {
       getAudiobooks(index);
+    }
+
+    if (Number(index) + 12 >= indexBounds.indexHigh) {
+      getAudiobooks(index);
+
     }
 
     if (createGrid && audiobooks && searchOptions) {
@@ -55,8 +70,8 @@ class SearchResult extends Component {
     this.setState({ fade: true, updateBook: book });
 
     setTimeout(() => changeBook(audiobooks, searchOptions, book), 800);
-     setTimeout(() => bringBack(), 1000);
-   };
+    setTimeout(() => bringBack(), 1000);
+  };
 
   render() {
     let { audiobooks, searchResult, bookGrid, loadingSearch } = this.props;
@@ -102,7 +117,7 @@ class SearchResult extends Component {
                     openBook={this.openBook}
                     handleClick={this.openBook}
                     updateBook={updateBook}
-                    currentBook = {true}
+                    currentBook={true}
                   />
                 )}
               </Container>
@@ -138,8 +153,8 @@ class SearchResult extends Component {
                 backgroundColor: "rgba(0, 0, 0, 0.25)",
                 padding: "16px !important",
                 maxWidth: "100% !important",
-                position: 'absolute',
-                height: '100%'
+                position: "absolute",
+                height: "100%",
               }}
             >
               {audiobooks && bookGrid && (
@@ -170,12 +185,14 @@ const mapStateToProps = (state) => {
     createGrid: state["home"]["createGrid"],
     loadingSearch: state["home"]["loadingSearch"],
     updateAudiobooks: state["home"]["updateAudiobooks"],
+    indexBounds: state["home"]["indexBounds"],
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getAudiobooks: (index) => dispatch(getAudiobooks(index)),
+
     createBookGrid: (audiobooks, searchOptions, index) =>
       dispatch(createBookGrid(audiobooks, searchOptions, index)),
     changeBook: (audiobooks, searchOptions, book) =>
