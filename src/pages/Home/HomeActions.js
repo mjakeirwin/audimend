@@ -9,6 +9,7 @@ export const SEARCHBOOKS = "SEARCHBOOKS";
 export const ERRORSEARCHBOOKS = "ERRORSEARCHBOOKS";
 export const CREATEBOOKGRID = "CREATEBOOKGRID";
 export const CHANGEBOOK = "CHANGEBOOK";
+export const INITREFRESH = "INITREFRESH";
 
 const IS_PROD = process.env.REACT_APP_IS_PROD;
 
@@ -138,6 +139,14 @@ export const changeBook = (audiobooks, searchOptions, book) => {
   return {
     type: CHANGEBOOK,
     data: { audiobooks, searchOptions, book },
+  };
+};
+
+export const initRefresh = (boolean) => {
+  return {
+    type: INITREFRESH,
+    data: boolean
+
   };
 };
 

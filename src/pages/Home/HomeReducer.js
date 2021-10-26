@@ -7,6 +7,7 @@ import {
   ERRORSEARCHBOOKS,
   CREATEBOOKGRID,
   CHANGEBOOK,
+  INITREFRESH
 } from "./HomeActions";
 
 const INITIAL_STATE = {
@@ -25,6 +26,7 @@ const INITIAL_STATE = {
   searchTitle: null,
   updateAudiobooks: false,
   indexBounds: null,
+  bookRefresh:false
 };
 
 const RANGE = 30
@@ -153,7 +155,7 @@ const reducer = (state = INITIAL_STATE, action) => {
           indexHigh: Number(action.data.index) + RANGE,
           indexLow: Number(action.data.index) - RANGE,
         },
-        updateAudiobooks: false,
+        updateAudiobooks: false
       };
 
     case SAVESEARCHRESULT:
@@ -175,6 +177,12 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         emptySearch: true,
       };
+
+      case INITREFRESH:
+        return {
+          ...state,
+          bookRefresh: action.data,
+        };
 
     case SEARCHBOOKS:
       return {

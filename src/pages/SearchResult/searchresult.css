@@ -13,5 +13,16 @@
 
 .consoleContainer {
     display: flex;
+    height:100%;
     background-color: white;
+}
+
+.console {
+    width:96%;
+    height:162px;
+    margin: 2%;
+    border-width: 1px;
+    border-style: solid;
+    background-color: rgba(0, 0, 0, 0.75);
+    box-shadow: 1px 1px grey;
 }
