@@ -102,14 +102,13 @@ class SearchResult extends Component {
             >
               <BookDrawer book={clickedBook} />
             </Drawer>
-            <div>
+            <div className = 'consoleContainer'>
               <Container
                 sx={{
                   backgroundColor: "rgba(0, 0, 0, 0.25)",
                   padding: "16px !important",
                   maxWidth: "50% !important",
                   margin: "0",
-                  display: "inline-block",
                 }}
               >
                 {audiobooks && (
@@ -129,21 +128,11 @@ class SearchResult extends Component {
                   padding: "16px !important",
                   paddingBottom: "18px !important",
                   maxWidth: "50% !important",
-                  display: "inline-block",
 
                   float: "right",
                 }}
               >
-                <Card
-                  sx={{
-                    minWidth: 50,
-                    minHeight: 200,
-                    maxHeight: 200,
-                    backgroundColor: "#84ffff",
-                    borderRadius: "0px",
-                  }}
-                  raised={true}
-                >
+             
                   <div className="console">
                     <Typography
                       variant="h5"
@@ -157,7 +146,6 @@ class SearchResult extends Component {
                       Audiobook Recommendations
                     </Typography>
                   </div>
-                </Card>
               </Container>
             </div>
 

@@ -18,11 +18,11 @@
 }
 
 .console {
-    width:96%;
-    height:162px;
-    margin: 2%;
-    border-width: 1px;
+    min-height: 200px;
+    max-height: 200px;
+    width:98%;
+    border-width: 3px;
     border-style: solid;
-    background-color: rgba(0, 0, 0, 0.75);
-    box-shadow: 1px 1px grey;
+    background-color: rgba(0, 0, 0, 0.50);
+    box-shadow: 5px 5px grey;
 }
