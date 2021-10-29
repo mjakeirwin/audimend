@@ -14,21 +14,6 @@ import { makeStyles } from "@material-ui/styles";
 import { render } from "react-dom";
 import Slide from "@mui/material/Slide";
 
-const useStyles = makeStyles({
-  flexGrow: {
-    flex: "1",
-  },
-  card: {
-    minWidth: 50,
-    minHeight: 200,
-    maxHeight: 200,
-    border: "1px solid black",
-    "&:hover": {
-      backgroundColor: "#e0e0e0",
-    },
-    transition: "width 2s",
-  },
-});
 
 class BookCard extends Component {
   constructor(props) {

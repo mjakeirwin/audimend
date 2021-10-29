@@ -48,7 +48,6 @@ export const searchBooks = (searchText) => {
   return (dispatch) => {
     callBackendAPI(searchText)
       .then((res) => {
-        console.log("bookResponse", res);
         dispatch({
           type: SEARCHBOOKS,
           data: res,
@@ -94,7 +93,6 @@ export const getBooks = () => {
 export const getAudiobooks = (index) => {
   let url = `${ENDPOINT}/audiobooks/${index}`;
 
-  console.log(index, url);
 
   const callBackendAPI = async () => {
     const response = await fetch(url);

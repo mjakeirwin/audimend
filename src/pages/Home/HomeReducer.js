@@ -56,7 +56,6 @@ const createGrid = (audiobooks, searchOptions, index, prevbookGrid) => {
 
   if (prevbookGrid) {
     var compareGrid = normalizeBookgrid(prevbookGrid);
-    console.log("NORMALIZING", compareGrid);
   }
 
   if (low < 0) {
@@ -70,7 +69,6 @@ const createGrid = (audiobooks, searchOptions, index, prevbookGrid) => {
     }
   }
   let gridIndex = 0;
-  console.log(indexArray);
   indexArray.forEach((element) => {
     if (index - 1 !== element) {
       if (compareGrid) {
@@ -86,7 +84,6 @@ const createGrid = (audiobooks, searchOptions, index, prevbookGrid) => {
             gridIndex: prevGridIndex,
           };
         } else {
-          console.log("ADDING TO TEMP");
           tempArray.push({
             book: audiobooks[searchOptions[element].uuid],
             gridIndex: 1,
@@ -103,18 +100,15 @@ const createGrid = (audiobooks, searchOptions, index, prevbookGrid) => {
   });
 
   if (compareGrid) {
-    console.log("run this code");
     tempArray.forEach((book) => {
       for (var h = 0; h <= 8; h++) {
         if (!(h in bookDict)) {
-          console.log("MISSING");
           bookDict[h] = book;
           break;
         }
       }
     });
 
-    console.log("DICT", bookDict);
     for (var s = 0; s <= 8; s++) {
       bookDict[s]["gridIndex"] = s;
     }
@@ -124,14 +118,6 @@ const createGrid = (audiobooks, searchOptions, index, prevbookGrid) => {
     }
   }
 
-  console.log(
-    "bookgrid",
-    bookGrid,
-    "prevbookgrid",
-    prevbookGrid,
-    "tempArray",
-    tempArray
-  );
 
   return bookGrid;
 };

@@ -91,7 +91,6 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("state", state);
 
   return {
     count: state["home"]["count"],

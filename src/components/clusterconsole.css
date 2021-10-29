@@ -1,0 +1,46 @@
+.controlConsole {
+  display: flex;
+}
+
+.added {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 10px;
+  min-height: 120px;
+  width: 50%;
+  border-width: 3px;
+  border-style: solid;
+  background-color: rgba(77, 175, 124, 0.5);
+  box-shadow: 2px 2px darkgreen;
+}
+
+.console {
+  min-height: 200px;
+  max-height: 200px;
+  width: 98%;
+  border-width: 3px;
+  border-style: solid;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 5px 5px grey;
+}
+
+.disabledButton {
+  color: rgba(0, 0, 0, 0.26) !important;
+  box-shadow: none !important;
+  background-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+.submitButton {
+  margin: 5px !important;
+  color: white !important;
+  border: 3px solid white !important;
+  height: 60px !important ;
+}
+
+.submitButton:hover {
+  background-color: white !important;
+  color: black !important;
+  border: 3px solid black !important;
+
+}

@@ -1,28 +1,15 @@
-
-
 .spotlight {
-    background-color: black;
-    opacity:50%;
-
-
+  background-color: black;
+  opacity: 50%;
 }
 
-.drawer{
-    width: 400px !important;
+.drawer {
+  width: 400px !important;
 }
 
 .consoleContainer {
-    display: flex;
-    height:100%;
-    background-color: white;
+  display: flex;
+  height: 100%;
+  background-color: white;
 }
 
-.console {
-    min-height: 200px;
-    max-height: 200px;
-    width:98%;
-    border-width: 3px;
-    border-style: solid;
-    background-color: rgba(0, 0, 0, 0.50);
-    box-shadow: 5px 5px grey;
-}

@@ -4,15 +4,22 @@ import BookGrid from "../../components/BookGrid";
 import Divider from "@mui/material/Divider";
 import BookCard from "../../components/BookCard";
 import BookDrawer from "../../components/BookDrawer";
+import ClusterConsole from "../../components/ClusterConsole";
 import Drawer from "@mui/material/Drawer";
 import Container from "@mui/material/Container";
-import { getAudiobooks, createBookGrid, changeBook, initRefresh } from "../Home/HomeActions";
+import {
+  getAudiobooks,
+  createBookGrid,
+  changeBook,
+  initRefresh,
+} from "../Home/HomeActions";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import Card from "@mui/material/Card";
 import Paper from "@mui/material/Paper";
 import style from "./searchresult.css";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 class SearchResult extends Component {
   constructor(props) {
@@ -40,24 +47,22 @@ class SearchResult extends Component {
       searchOptions,
       updateAudiobooks,
       indexBounds,
-      initRefresh
+      initRefresh,
     } = this.props;
 
-    console.log(indexBounds.indexHigh, index, indexBounds.indexLow);
 
     if (updateAudiobooks) {
       getAudiobooks(index);
     }
 
     if (Number(index) + 12 >= indexBounds.indexHigh) {
-      initRefresh(true)
+      initRefresh(true);
       getAudiobooks(index);
     }
 
     if (createGrid && audiobooks && searchOptions) {
       createBookGrid(audiobooks, searchOptions, index);
-      initRefresh(false)
-
+      initRefresh(false);
     }
   }
 
@@ -75,7 +80,8 @@ class SearchResult extends Component {
   };
 
   render() {
-    let { audiobooks, searchResult, bookGrid, loadingSearch, bookRefresh } = this.props;
+    let { audiobooks, searchResult, bookGrid, loadingSearch, bookRefresh } =
+      this.props;
     let { openBook, clickedBook, updateBook } = this.state;
 
     return (
@@ -102,7 +108,7 @@ class SearchResult extends Component {
             >
               <BookDrawer book={clickedBook} />
             </Drawer>
-            <div className = 'consoleContainer'>
+            <div className="consoleContainer">
               <Container
                 sx={{
                   backgroundColor: "rgba(0, 0, 0, 0.25)",
@@ -132,20 +138,7 @@ class SearchResult extends Component {
                   float: "right",
                 }}
               >
-             
-                  <div className="console">
-                    <Typography
-                      variant="h5"
-                      component="div"
-                      noWrap
-                      sx={{
-                        color: "white",
-                        margin: '2%'
-                      }}
-                    >
-                      Audiobook Recommendations
-                    </Typography>
-                  </div>
+                <ClusterConsole />
               </Container>
             </div>
 
@@ -169,7 +162,7 @@ class SearchResult extends Component {
                   openBook={this.openBook}
                   handleClick={this.handleClick}
                   updateBook={updateBook}
-                  bookRefresh = {bookRefresh}
+                  bookRefresh={bookRefresh}
                 />
               )}
             </Container>
@@ -181,7 +174,6 @@ class SearchResult extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
 
   return {
     searchResult: state["home"]["searchResult"],
@@ -193,7 +185,7 @@ const mapStateToProps = (state) => {
     loadingSearch: state["home"]["loadingSearch"],
     updateAudiobooks: state["home"]["updateAudiobooks"],
     indexBounds: state["home"]["indexBounds"],
-    bookRefresh: state["home"]["bookRefresh"]
+    bookRefresh: state["home"]["bookRefresh"],
   };
 };
 
@@ -205,8 +197,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(createBookGrid(audiobooks, searchOptions, index)),
     changeBook: (audiobooks, searchOptions, book) =>
       dispatch(changeBook(audiobooks, searchOptions, book)),
-      initRefresh: (boolean) =>
-      dispatch(initRefresh(boolean))
+    initRefresh: (boolean) => dispatch(initRefresh(boolean)),
   };
 };
 

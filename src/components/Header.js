@@ -53,7 +53,6 @@ class Header extends Component {
   render() {
     let { bookNames, openSearch, searchTitle } = this.props;
 
-    console.log(searchTitle)
 
     return (
       <div>
