@@ -85,7 +85,7 @@ const ClusterConsole = (props) => {
         <div className="added">
           {grid.map((category, key) => (
             <Button
-              sx={{ margin: "5px" }}
+              sx={{ margin: '10px 5px 0 5px', height: '40px', 'width': '21%' }}
               key={key}
               variant="contained"
               className={category.Status ? "" : "disabledButton"}
